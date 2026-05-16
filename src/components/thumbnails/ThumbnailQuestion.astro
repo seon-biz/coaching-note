@@ -31,6 +31,7 @@ const label = formatPostLabel(number, category);
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+    padding: clamp(20px, 7cqi, 48px);
   }
 
   .label {
@@ -38,6 +39,7 @@ const label = formatPostLabel(number, category);
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--terra-soft);
+    font-size: clamp(10px, 2.4cqi, 12px);
   }
 
   .quote-block {
@@ -58,6 +60,8 @@ const label = formatPostLabel(number, category);
     margin: 0;
     max-width: 80%;
     text-wrap: balance;
+    word-break: keep-all;
+    font-size: clamp(16px, 6cqi, 30px);
   }
 
   .quote-mark {
@@ -68,6 +72,7 @@ const label = formatPostLabel(number, category);
     line-height: 1;
     pointer-events: none;
     user-select: none;
+    font-size: clamp(44px, 18cqi, 110px);
   }
 
   .quote-mark.open {
@@ -81,41 +86,9 @@ const label = formatPostLabel(number, category);
   }
 
   .attribution {
-    font-size: 13px;
     color: rgba(240, 236, 223, 0.72);
     text-align: right;
     line-height: 1.4;
-  }
-
-  .thumb-question.is-big {
-    padding: 48px;
-  }
-  .thumb-question.is-big .label {
-    font-size: 12px;
-  }
-  .thumb-question.is-big .question {
-    font-size: 30px;
-  }
-  .thumb-question.is-big .quote-mark {
-    font-size: 120px;
-  }
-  .thumb-question.is-big .attribution {
-    font-size: 13px;
-  }
-
-  .thumb-question.is-small {
-    padding: 28px 32px;
-  }
-  .thumb-question.is-small .label {
-    font-size: 11px;
-  }
-  .thumb-question.is-small .question {
-    font-size: 19px;
-  }
-  .thumb-question.is-small .quote-mark {
-    font-size: 76px;
-  }
-  .thumb-question.is-small .attribution {
-    font-size: 11px;
+    font-size: clamp(10px, 2.6cqi, 13px);
   }
 </style>
