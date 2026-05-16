@@ -124,6 +124,24 @@ nav.site-nav a[aria-current="page"] {
   color: var(--terra);
 }
 
+/* ---- Mobile header ---- */
+@media (max-width: 720px) {
+  header.site .inner {
+    padding: 14px var(--gutter);
+  }
+  .brand {
+    transform: scale(0.88);
+    transform-origin: left center;
+  }
+  nav.site-nav {
+    gap: 20px;
+  }
+  nav.site-nav a {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+}
+
 /* ---- Site footer ---- */
 footer.site {
   padding: 48px 0 64px;

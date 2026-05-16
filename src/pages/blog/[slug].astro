@@ -351,13 +351,20 @@ const dateLabel = formatKoreanDate(date);
   /* ---- Mobile ---- */
   @media (max-width: 720px) {
     .article-header {
-      padding: 80px 0 56px;
+      padding: 64px var(--gutter) 48px;
     }
     .article-header h1 {
       font-size: 30px;
     }
     .header-rule {
       margin-bottom: 64px;
+      padding: 0 var(--gutter);
+    }
+    .article-body {
+      padding-left: var(--gutter);
+    }
+    .article-footer {
+      padding: 96px var(--gutter) 64px;
     }
     .article-body :global(p),
     .article-body :global(ul li) {
