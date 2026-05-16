@@ -54,7 +54,7 @@ export const onRequestPost = async ({ request, env }: EventContext): Promise<Res
   const business = readString(raw.business);
   const message = readString(raw.message);
 
-  if (!name || !contact || !coaching || !message) {
+  if (!name || !contact || !coaching) {
     return json(400, { ok: false, error: 'validation' });
   }
   if (
@@ -71,7 +71,7 @@ export const onRequestPost = async ({ request, env }: EventContext): Promise<Res
     return json(500, { ok: false, error: 'send_failed' });
   }
 
-  const html = [
+  const sections: string[] = [
     '<h2>새 상담신청이 접수되었습니다</h2>',
     '<table>',
     `  <tr><td><strong>이름</strong></td><td>${escapeHtml(name)}</td></tr>`,
@@ -79,11 +79,14 @@ export const onRequestPost = async ({ request, env }: EventContext): Promise<Res
     `  <tr><td><strong>관심 코칭</strong></td><td>${escapeHtml(coaching)}</td></tr>`,
     `  <tr><td><strong>사업체명</strong></td><td>${business ? escapeHtml(business) : '미입력'}</td></tr>`,
     '</table>',
-    '<h3>문의 내용</h3>',
-    `<p style="white-space: pre-wrap;">${escapeHtml(message)}</p>`,
-    '<hr>',
-    '<p style="color: #888; font-size: 12px;">note.seonbiz.com 상담신청 폼에서 발송됨</p>',
-  ].join('\n');
+  ];
+  if (message) {
+    sections.push('<h3>문의 내용</h3>');
+    sections.push(`<p style="white-space: pre-wrap;">${escapeHtml(message)}</p>`);
+  }
+  sections.push('<hr>');
+  sections.push('<p style="color: #888; font-size: 12px;">note.seonbiz.com 상담신청 폼에서 발송됨</p>');
+  const html = sections.join('\n');
 
   const payload: Record<string, unknown> = {
     from: FROM,
