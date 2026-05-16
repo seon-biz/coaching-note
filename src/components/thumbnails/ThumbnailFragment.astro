@@ -46,6 +46,7 @@ const renderLine = (line: string): Array<{ text: string; terra: boolean }> => {
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+    padding: clamp(20px, 7cqi, 48px);
   }
 
   .frag {
@@ -56,6 +57,8 @@ const renderLine = (line: string): Array<{ text: string; terra: boolean }> => {
     color: var(--ink);
     margin: 0;
     align-self: flex-start;
+    word-break: keep-all;
+    font-size: clamp(22px, 10cqi, 56px);
   }
 
   .frag .terra {
@@ -68,25 +71,6 @@ const renderLine = (line: string): Array<{ text: string; terra: boolean }> => {
     text-transform: uppercase;
     color: var(--mute);
     align-self: flex-end;
-  }
-
-  .thumb-fragment.is-big {
-    padding: 48px 56px;
-  }
-  .thumb-fragment.is-big .frag {
-    font-size: 56px;
-  }
-  .thumb-fragment.is-big .label {
-    font-size: 12px;
-  }
-
-  .thumb-fragment.is-small {
-    padding: 32px 36px;
-  }
-  .thumb-fragment.is-small .frag {
-    font-size: 38px;
-  }
-  .thumb-fragment.is-small .label {
-    font-size: 11px;
+    font-size: clamp(10px, 2.4cqi, 12px);
   }
 </style>
