@@ -1,0 +1,150 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatNumericDate, formatPostLabel } from '../../lib/format.ts';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.number - a.data.number
+);
+---
+
+<BaseLayout title="모든 글" description="코칭 노트의 글을 모아둔 자리.">
+  <section class="hero reading">
+    <span class="meta-label terra">ALL NOTES</span>
+    <h1>모든 글</h1>
+  </section>
+
+  <section class="archive reading" aria-label="글 목록">
+    <ol class="list">
+      {posts.map((post) => {
+        const slug = String(post.data.number).padStart(3, '0');
+        const dateLabel = formatNumericDate(post.data.date);
+        const numberLabel = formatPostLabel(post.data.number, post.data.category);
+        return (
+          <li class="row">
+            <a class="row-link" href={`/blog/${slug}`}>
+              <div class="meta-row">
+                <span class="date">{dateLabel}</span>
+                <span class="label">· {numberLabel}</span>
+              </div>
+              <h2 class="title">{post.data.title}</h2>
+              <p class="excerpt">{post.data.excerpt}</p>
+            </a>
+          </li>
+        );
+      })}
+    </ol>
+  </section>
+</BaseLayout>
+
+<style>
+  .meta-label {
+    font-family: var(--font-meta);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+  .meta-label.terra { color: var(--terra); }
+
+  /* ---- HERO ---- */
+  .hero {
+    padding: 160px var(--gutter) 96px;
+  }
+  .hero .meta-label {
+    display: block;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -0.026em;
+    line-height: 1.1;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  /* ---- LIST ---- */
+  .archive {
+    padding-bottom: 160px;
+  }
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .row {
+    border-bottom: 1px solid var(--rule);
+  }
+  .row-link {
+    display: block;
+    padding: 40px 0;
+    color: inherit;
+    text-decoration: none;
+  }
+  .row-link:hover .title {
+    color: var(--terra);
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-family: var(--font-meta);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .meta-row .date {
+    color: var(--mute);
+  }
+  .meta-row .label {
+    color: var(--terra);
+  }
+
+  .title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.018em;
+    line-height: 1.35;
+    color: var(--ink);
+    margin: 0 0 12px;
+    text-wrap: balance;
+    word-break: keep-all;
+    transition: color 0.15s;
+  }
+  .excerpt {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--mute);
+    margin: 0;
+    word-break: keep-all;
+    text-wrap: pretty;
+    max-width: 56ch;
+  }
+
+  /* ---- Mobile ---- */
+  @media (max-width: 720px) {
+    .hero {
+      padding: 80px var(--gutter) 56px;
+    }
+    .hero h1 {
+      font-size: 36px;
+    }
+    .archive {
+      padding-bottom: 96px;
+    }
+    .row-link {
+      padding: 32px 0;
+    }
+    .title {
+      font-size: 19px;
+    }
+    .excerpt {
+      font-size: 14px;
+    }
+  }
+</style>

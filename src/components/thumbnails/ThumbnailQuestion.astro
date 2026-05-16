@@ -1,0 +1,121 @@
+---
+import { formatPostLabel } from '../../lib/format.ts';
+
+interface Props {
+  size: 'big' | 'small';
+  number: number;
+  category: string;
+  question: string;
+  attribution?: string;
+}
+
+const { size, number, category, question, attribution } = Astro.props;
+const label = formatPostLabel(number, category);
+---
+
+<div class:list={['thumb', 'thumb-question', `is-${size}`]} aria-hidden="true">
+  <div class="label">{label}</div>
+  <div class="quote-block">
+    <span class="quote-mark open" aria-hidden="true">&ldquo;</span>
+    <p class="question">{question}</p>
+    <span class="quote-mark close" aria-hidden="true">&rdquo;</span>
+  </div>
+  {attribution && <div class="attribution">{attribution}</div>}
+</div>
+
+<style>
+  .thumb-question {
+    background: var(--green);
+    color: #f0ecdf;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .label {
+    font-family: var(--font-meta);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--terra-soft);
+  }
+
+  .quote-block {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .question {
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: -0.018em;
+    color: #f0ecdf;
+    margin: 0;
+    max-width: 80%;
+    text-wrap: balance;
+  }
+
+  .quote-mark {
+    position: absolute;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    color: var(--terra-soft);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .quote-mark.open {
+    top: -0.1em;
+    left: 0;
+  }
+
+  .quote-mark.close {
+    bottom: -0.45em;
+    right: 0;
+  }
+
+  .attribution {
+    font-size: 13px;
+    color: rgba(240, 236, 223, 0.72);
+    text-align: right;
+    line-height: 1.4;
+  }
+
+  .thumb-question.is-big {
+    padding: 48px;
+  }
+  .thumb-question.is-big .label {
+    font-size: 12px;
+  }
+  .thumb-question.is-big .question {
+    font-size: 30px;
+  }
+  .thumb-question.is-big .quote-mark {
+    font-size: 120px;
+  }
+  .thumb-question.is-big .attribution {
+    font-size: 13px;
+  }
+
+  .thumb-question.is-small {
+    padding: 28px 32px;
+  }
+  .thumb-question.is-small .label {
+    font-size: 11px;
+  }
+  .thumb-question.is-small .question {
+    font-size: 19px;
+  }
+  .thumb-question.is-small .quote-mark {
+    font-size: 76px;
+  }
+  .thumb-question.is-small .attribution {
+    font-size: 11px;
+  }
+</style>

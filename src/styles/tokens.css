@@ -1,0 +1,30 @@
+:root {
+  /* ---- Colors ---- */
+  --paper:      #f5f1ea;
+  --paper-2:    #ece7da;
+  --ink:        #1c2520;
+  --green:      #2a3d2e;
+  --green-2:    #3d5942;
+  --terra:      #c4633b;
+  --terra-soft: #d98f6a;
+  --mute:       rgba(28, 37, 32, 0.55);
+  --mute-2:     rgba(28, 37, 32, 0.35);
+  --rule:       rgba(28, 37, 32, 0.16);
+
+  /* ---- Fonts ---- */
+  --font-brand:   'Nanum Gothic Coding', monospace;
+  --font-meta:    'JetBrains Mono', monospace;
+  --font-display: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-body:    'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-serif:   'Noto Serif KR', serif;
+
+  /* ---- Layout widths ---- */
+  --container:    920px;
+  --reading:      680px;
+  --form-width:   680px;
+  --gutter:       24px;
+
+  /* ---- Vertical rhythm ---- */
+  --section-gap:        128px;
+  --section-gap-mobile: 80px;
+}

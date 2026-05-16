@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>코칭 노트 — 메인</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+KR:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+
+<style>
+  :root {
+    --paper: #f5f1ea;
+    --paper-2: #ece7da;
+    --ink: #1c2520;
+    --green: #2a3d2e;
+    --terra: #c4633b;
+    --terra-soft: #d98f6a;
+    --mute: rgba(28, 37, 32, 0.55);
+    --mute-2: rgba(28, 37, 32, 0.35);
+    --rule: rgba(28, 37, 32, 0.16);
+
+    --font-brand: 'Nanum Gothic Coding', monospace;
+    --font-meta: 'JetBrains Mono', monospace;
+    --font-body: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --font-display: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+    --container: 920px;
+    --gutter: 24px;
+    --section-gap: 128px;
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-feature-settings:"ss06","case";
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  a{color:inherit;text-decoration:none}
+
+  .container{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
+  .meta{
+    font-family:var(--font-meta);
+    font-size:11px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--mute);
+  }
+  .meta.terra{color:var(--terra)}
+  .rule{height:1px;background:var(--rule);width:100%;border:0}
+
+  /* ---- HEADER ---- */
+  header.site{
+    border-bottom:1px solid var(--rule);
+    background:var(--paper);
+  }
+  header.site .inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px var(--gutter);
+    max-width:var(--container);
+    margin:0 auto;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    text-decoration:none;
+    color:var(--ink);
+  }
+  .wordmark{
+    position:relative;
+    padding:4px 4px;
+    display:inline-block;
+  }
+  .wordmark-text{
+    font-family:var(--font-brand);
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:-0.02em;
+    line-height:1;
+    color:var(--ink);
+    position:relative;
+    z-index:1;
+    white-space:nowrap;
+  }
+  .wordmark-underline{
+    position:absolute;
+    left:0;
+    bottom:-1px;
+    pointer-events:none;
+  }
+  nav.site-nav{
+    display:flex;
+    gap:32px;
+  }
+  nav.site-nav a{
+    font-family:var(--font-meta);
+    font-size:12px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--ink);
+    padding:4px 0;
+    transition:color .15s;
+  }
+  nav.site-nav a:hover{color:var(--terra)}
+
+  /* ---- HERO ---- */
+  section.hero{
+    padding:160px 0 144px;
+  }
+  .hero .eyebrow{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    margin-bottom:48px;
+  }
+  .hero .name-ko{
+    font-size:18px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    line-height:1.3;
+    color:var(--ink);
+  }
+  .hero .name-en{
+    font-family:var(--font-meta);
+    font-size:11px;
+    letter-spacing:0.28em;
+    color:var(--mute);
+    text-transform:uppercase;
+  }
+  .hero p.statement{
+    font-family:var(--font-display);
+    font-size:38px;
+    font-weight:500;
+    letter-spacing:-0.024em;
+    line-height:1.55;
+    color:var(--ink);
+    max-width:720px;
+    margin:0;
+    text-wrap:pretty;
+  }
+  .hero p.statement span.terra{color:var(--terra)}
+
+  /* ---- RECENT NOTES ---- */
+  section.notes{
+    padding-top:0;
+    padding-bottom:var(--section-gap);
+  }
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    padding-bottom:24px;
+    margin-bottom:48px;
+    border-bottom:1px solid var(--rule);
+  }
+  .section-head .title{
+    font-size:22px;
+    font-weight:600;
+    letter-spacing:-0.015em;
+  }
+
+  /* Big post */
+  .post-big{margin-bottom:96px}
+  .post-big .thumb{
+    width:100%;
+    aspect-ratio:16/9;
+    margin-bottom:32px;
+    overflow:hidden;
+    background:var(--green);
+    position:relative;
+  }
+  .post-big .meta-row{
+    display:flex;
+    gap:24px;
+    margin-bottom:14px;
+  }
+  .post-big h2{
+    font-family:var(--font-display);
+    font-size:34px;
+    font-weight:700;
+    letter-spacing:-0.022em;
+    line-height:1.25;
+    margin:0 0 18px;
+    color:var(--ink);
+    text-wrap:balance;
+  }
+  .post-big p.excerpt{
+    font-size:16px;
+    line-height:1.8;
+    color:var(--ink);
+    margin:0 0 22px;
+    max-width:680px;
+    text-wrap:pretty;
+  }
+  .read-more{
+    font-family:var(--font-meta);
+    font-size:11px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--terra);
+    transition:color .15s, transform .15s;
+    display:inline-block;
+  }
+  .read-more:hover{color:var(--ink)}
+  .read-more .arrow{display:inline-block;margin-left:6px;transition:transform .2s}
+  .read-more:hover .arrow{transform:translateX(3px)}
+
+  /* Small posts row */
+  .posts-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:48px;
+    margin-bottom:64px;
+  }
+  .post-small .thumb{
+    width:100%;
+    aspect-ratio:16/9;
+    margin-bottom:22px;
+    overflow:hidden;
+    position:relative;
+  }
+  .post-small .meta-row{
+    display:flex;
+    gap:18px;
+    margin-bottom:10px;
+  }
+  .post-small h3{
+    font-family:var(--font-display);
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:-0.018em;
+    line-height:1.3;
+    margin:0 0 12px;
+    color:var(--ink);
+    text-wrap:balance;
+  }
+  .post-small p.excerpt{
+    font-size:15px;
+    line-height:1.7;
+    color:var(--mute);
+    margin:0;
+  }
+
+  .archive-link{
+    display:flex;
+    justify-content:flex-end;
+  }
+
+  /* ---- TRUST BANNER ---- */
+  section.trust{
+    background:var(--green);
+    color:#f0ecdf;
+    padding:160px 0;
+    margin:0 -100vw;          /* extend bg full-bleed even when container constrained */
+    padding-left:calc(100vw);
+    padding-right:calc(100vw);
+  }
+  /* Simpler full-bleed approach */
+  section.trust{
+    background:var(--green);
+    color:#f0ecdf;
+    padding:160px var(--gutter);
+    margin:0;
+  }
+  section.trust .inner{
+    max-width:var(--container);
+    margin:0 auto;
+  }
+  section.trust p{
+    font-family:var(--font-display);
+    font-size:36px;
+    font-weight:500;
+    letter-spacing:-0.022em;
+    line-height:1.55;
+    margin:0;
+    max-width:780px;
+    text-wrap:pretty;
+  }
+  section.trust .nums{font-weight:700;color:#fff}
+  section.trust .eyebrow{
+    font-family:var(--font-meta);
+    font-size:11px;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--terra-soft);
+    margin-bottom:32px;
+  }
+
+  /* ---- COACHING ---- */
+  section.coaching{
+    padding:var(--section-gap) 0;
+  }
+  section.coaching .eyebrow{
+    margin-bottom:28px;
+  }
+  section.coaching h2.section-title{
+    font-family:var(--font-display);
+    font-size:48px;
+    font-weight:700;
+    letter-spacing:-0.026em;
+    margin:0 0 36px;
+    line-height:1;
+    color:var(--ink);
+  }
+  section.coaching p.body{
+    font-size:18px;
+    line-height:1.8;
+    color:var(--ink);
+    margin:0 0 40px;
+    max-width:640px;
+  }
+  section.coaching .cta{
+    font-family:var(--font-meta);
+    font-size:12px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--terra);
+    border-bottom:1px solid var(--terra);
+    padding-bottom:4px;
+    transition:color .15s,border-color .15s;
+  }
+  section.coaching .cta:hover{
+    color:var(--ink);
+    border-color:var(--ink);
+  }
+  section.coaching .cta .arrow{display:inline-block;margin-left:8px;transition:transform .2s}
+  section.coaching .cta:hover .arrow{transform:translateX(3px)}
+
+  /* ---- FOOTER ---- */
+  footer.site{
+    padding:48px 0 64px;
+    border-top:1px solid var(--rule);
+  }
+  footer.site .inner{
+    max-width:var(--container);
+    margin:0 auto;
+    padding:0 var(--gutter);
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  footer.site .who{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  footer.site .name{
+    font-size:14px;
+    color:var(--ink);
+    font-weight:500;
+  }
+  footer.site .mail{
+    font-family:var(--font-meta);
+    font-size:12px;
+    color:var(--mute);
+    letter-spacing:0.04em;
+  }
+  footer.site .mail:hover{color:var(--terra)}
+  footer.site .copy{
+    font-family:var(--font-meta);
+    font-size:11px;
+    letter-spacing:0.18em;
+    color:var(--mute);
+    text-transform:uppercase;
+  }
+
+  /* ---- Thumbnail compositions ---- */
+  .thumb-big{
+    background:var(--green);
+    color:#f0ecdf;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    padding:48px;
+    position:relative;
+  }
+  .thumb-big .glyph{
+    font-family:var(--font-display);
+    font-size:240px;
+    font-weight:500;
+    line-height:0.85;
+    letter-spacing:-0.04em;
+    color:#f0ecdf;
+    margin:0;
+  }
+  .thumb-big .num-meta{
+    font-family:var(--font-meta);
+    font-size:12px;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--terra-soft);
+    align-self:flex-start;
+    padding-top:8px;
+  }
+  .thumb-big .corner-mark{
+    position:absolute;
+    top:32px;
+    right:36px;
+  }
+
+  .thumb-paper{
+    background:var(--paper-2);
+    color:var(--ink);
+    padding:32px 36px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    position:relative;
+  }
+  .thumb-paper .frag{
+    font-family:var(--font-display);
+    font-size:38px;
+    font-weight:500;
+    letter-spacing:-0.022em;
+    line-height:1.25;
+    color:var(--ink);
+    margin:0;
+    align-self:flex-start;
+  }
+  .thumb-paper .frag .terra{color:var(--terra)}
+  .thumb-paper .num-meta{
+    font-family:var(--font-meta);
+    font-size:11px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--mute);
+    align-self:flex-end;
+  }
+
+  .thumb-cream{
+    background:var(--paper);
+    color:var(--ink);
+    border:1px solid var(--rule);
+    padding:32px 36px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    position:relative;
+  }
+  .thumb-cream .num-big{
+    font-family:var(--font-display);
+    font-size:96px;
+    font-weight:500;
+    letter-spacing:-0.04em;
+    line-height:0.85;
+    color:var(--terra);
+    margin:0;
+  }
+  .thumb-cream .label{
+    font-family:var(--font-meta);
+    font-size:11px;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--mute);
+  }
+  .thumb-cream .quote-frag{
+    font-size:14px;
+    line-height:1.55;
+    color:var(--ink);
+    max-width:200px;
+    font-weight:500;
+    align-self:flex-end;
+    text-align:right;
+  }
+
+  /* small-screen safety (single column - still desktop scope but for the iframe preview) */
+  @media (max-width: 760px){
+    .posts-row{grid-template-columns:1fr;gap:80px}
+    .hero p.statement{font-size:28px}
+    section.trust p{font-size:26px}
+    section.coaching h2.section-title{font-size:36px}
+  }
+</style>
+</head>
+<body data-screen-label="01 메인">
+
+<!-- ================== HEADER ================== -->
+<header class="site" data-comment-anchor="header">
+  <div class="inner">
+    <a class="brand" href="/" aria-label="코칭 노트 홈">
+      <!-- Mark · Solid Comma Spiral · size=26 -->
+      <svg viewBox="0 0 220 220" width="26" height="26" style="display:block" aria-hidden="true">
+        <path d="M 110 22 C 165 22, 198 60, 198 110 C 198 162, 158 198, 110 198 C 62 198, 22 162, 22 114 C 22 78, 50 50, 86 50 C 116 50, 140 72, 140 102 C 140 126, 122 144, 100 144 C 84 144, 72 132, 72 116 C 72 106, 80 98, 90 98 C 96 98, 102 102, 104 108"
+              fill="#c4633b" stroke="#c4633b" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <span class="wordmark" aria-label="코칭 노트">
+        <span class="wordmark-text">코칭 노트</span>
+        <svg class="wordmark-underline" width="101.2" height="4.84" aria-hidden="true">
+          <path d="M2 2.86 Q 24.2 0.66, 48.4 2.42 T 99 1.98" stroke="#c4633b" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        </svg>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="주 메뉴">
+      <a href="/" aria-current="page">메인</a>
+      <a href="/blog">블로그</a>
+      <a href="/consult">상담신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================== HERO ================== -->
+  <section class="hero" data-comment-anchor="hero">
+    <div class="container">
+      <div class="eyebrow">
+        <div class="name-ko">서정옥</div>
+        <div class="name-en">Online Business Coach · 8 Years</div>
+      </div>
+      <p class="statement">
+        낯섦을 반복하면<br/>
+        어느덧 <span class="terra">익숙한 것</span>이 된다는 것을,<br/>
+        8년을 거치며 알게 되었습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================== RECENT NOTES ================== -->
+  <section class="notes" data-comment-anchor="notes">
+    <div class="container">
+      <div class="section-head">
+        <div class="title">최근 글</div>
+        <div class="meta">RECENT NOTES</div>
+      </div>
+
+      <!-- Big post -->
+      <article class="post-big" data-comment-anchor="post-big">
+        <div class="thumb thumb-big" aria-hidden="true">
+          <svg class="corner-mark" viewBox="0 0 220 220" width="28" height="28" aria-hidden="true">
+            <path d="M 110 22 C 165 22, 198 60, 198 110 C 198 162, 158 198, 110 198 C 62 198, 22 162, 22 114 C 22 78, 50 50, 86 50 C 116 50, 140 72, 140 102 C 140 126, 122 144, 100 144 C 84 144, 72 132, 72 116 C 72 106, 80 98, 90 98 C 96 98, 102 102, 104 108"
+                  fill="#d98f6a" stroke="#d98f6a" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <div class="num-meta">N°.012 · 결정</div>
+          <p class="glyph">결정</p>
+        </div>
+        <div class="meta-row">
+          <span class="meta">2026.05.12</span>
+          <span class="meta terra">· N°.012 · 결정</span>
+          <span class="meta">6분</span>
+        </div>
+        <h2>혼자 결정해야 하는 자리에서 일어나는 일들</h2>
+        <p class="excerpt">
+          어느 대표가 말했습니다. "결정하는 게 외로워서요."
+          외로움이라는 단어 뒤에는 보통 능력의 부족이 숨어 있다고 여겨지지만,
+          그 자리의 외로움은 조금 다른 종류더군요. 정보가 모이지 않거나,
+          시간이 부족하거나, 같은 무게를 나눠 들 사람이 없거나 — 셋 중 하나, 혹은 셋 다인 경우가 많았습니다.
+        </p>
+        <a class="read-more" href="/blog/012">계속 읽기 <span class="arrow">→</span></a>
+      </article>
+
+      <!-- 2 small posts -->
+      <div class="posts-row">
+        <article class="post-small" data-comment-anchor="post-small-1">
+          <div class="thumb thumb-paper" aria-hidden="true">
+            <p class="frag">위임이 어려운<br/>진짜 <span class="terra">이유</span>는,</p>
+            <div class="num-meta">N°.011 · 위임</div>
+          </div>
+          <div class="meta-row">
+            <span class="meta">2026.05.08</span>
+            <span class="meta terra">· N°.011 · 위임</span>
+          </div>
+          <h3>위임이 되지 않는 세 가지 일</h3>
+          <p class="excerpt">
+            어떤 일은 위임해서는 안 됩니다. 어떤 일은 위임할 수 없습니다.
+            그리고 어떤 일은 — 사실 위임이 어려운 게 아닌데, 손에서 놓지 못합니다.
+          </p>
+        </article>
+
+        <article class="post-small" data-comment-anchor="post-small-2">
+          <div class="thumb thumb-cream" aria-hidden="true">
+            <div class="label">N°.010 · 리듬</div>
+            <p class="num-big">90<span style="font-size:0.5em;letter-spacing:0;">분</span></p>
+            <p class="quote-frag">시간을 어떻게 쓰는가에서<br/>가장 분명히 갈립니다.</p>
+          </div>
+          <div class="meta-row">
+            <span class="meta">2026.05.03</span>
+            <span class="meta terra">· N°.010 · 리듬</span>
+          </div>
+          <h3>1주 1회, 90분의 효용</h3>
+          <p class="excerpt">
+            코칭이 컨설팅과 다른 점이 있다면, 시간을 어떻게 쓰는가에서 가장 분명히 갈립니다.
+          </p>
+        </article>
+      </div>
+
+      <div class="archive-link">
+        <a class="read-more" href="/blog">지금까지 쓴 글 더 보기 <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== TRUST BANNER ================== -->
+  <section class="trust" data-comment-anchor="trust">
+    <div class="inner">
+      <div class="eyebrow">SINCE 2018 · 30 BUSINESSES · 17 MONTHS AVG</div>
+      <p>
+        <span class="nums">8년</span> 동안 <span class="nums">30개 업체</span>와 함께했습니다.<br/>
+        한 업체와 평균 <span class="nums">17개월</span>을 같이 지나갑니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================== COACHING ================== -->
+  <section class="coaching" data-comment-anchor="coaching">
+    <div class="container">
+      <div class="eyebrow meta">COACHING</div>
+      <h2 class="section-title">코칭</h2>
+      <p class="body">
+        1:1 코칭과 상세페이지·쇼핑몰·SEO 그룹 코칭을 진행합니다.
+        모두 주 1회 줌으로 만나, 그 한 주의 결정과 흐름을 함께 짚습니다.
+      </p>
+      <a class="cta" href="/consult">자세한 안내 <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================== FOOTER ================== -->
+<footer class="site" data-comment-anchor="footer">
+  <div class="inner">
+    <div class="who">
+      <div class="name">서정옥 / 온라인 비즈니스 코치</div>
+      <a class="mail" href="mailto:cobaltblue872@gmail.com">cobaltblue872@gmail.com</a>
+    </div>
+    <div class="copy">© seonbiz</div>
+  </div>
+</footer>
+
+</body>
+</html>

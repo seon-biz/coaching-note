@@ -1,0 +1,102 @@
+---
+import { formatPostLabel } from '../../lib/format.ts';
+
+interface Props {
+  size: 'big' | 'small';
+  number: number;
+  category: string;
+  num: string;
+  unit?: string;
+  quote?: string;
+}
+
+const { size, number, category, num, unit, quote } = Astro.props;
+const label = formatPostLabel(number, category);
+const quoteLines = quote ? quote.split(/\n/) : [];
+---
+
+<div class:list={['thumb', 'thumb-numeral', `is-${size}`]} aria-hidden="true">
+  <div class="label">{label}</div>
+  <p class="num-big">{num}{unit && <span class="unit">{unit}</span>}</p>
+  {quote && (
+    <p class="quote-frag">
+      {quoteLines.map((line, i) => (
+        <>
+          {i > 0 && <br />}
+          {line}
+        </>
+      ))}
+    </p>
+  )}
+</div>
+
+<style>
+  .thumb-numeral {
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .label {
+    font-family: var(--font-meta);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+
+  .num-big {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.85;
+    color: var(--terra);
+    margin: 0;
+  }
+
+  .num-big .unit {
+    font-size: 0.5em;
+    letter-spacing: 0;
+    margin-left: 0.06em;
+  }
+
+  .quote-frag {
+    line-height: 1.55;
+    color: var(--ink);
+    font-weight: 500;
+    align-self: flex-end;
+    text-align: right;
+    margin: 0;
+  }
+
+  .thumb-numeral.is-big {
+    padding: 48px 56px;
+  }
+  .thumb-numeral.is-big .label {
+    font-size: 12px;
+  }
+  .thumb-numeral.is-big .num-big {
+    font-size: 200px;
+  }
+  .thumb-numeral.is-big .quote-frag {
+    font-size: 17px;
+    max-width: 320px;
+  }
+
+  .thumb-numeral.is-small {
+    padding: 32px 36px;
+  }
+  .thumb-numeral.is-small .label {
+    font-size: 11px;
+  }
+  .thumb-numeral.is-small .num-big {
+    font-size: 96px;
+  }
+  .thumb-numeral.is-small .quote-frag {
+    font-size: 14px;
+    max-width: 200px;
+  }
+</style>

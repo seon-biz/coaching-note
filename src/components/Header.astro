@@ -1,0 +1,24 @@
+---
+import SpiralMark from './SpiralMark.astro';
+import Wordmark from './Wordmark.astro';
+
+const path = Astro.url.pathname;
+
+const isHome = path === '/' || path === '';
+const isBlog = path === '/blog' || path === '/blog/' || path.startsWith('/blog/');
+const isConsult = path === '/consult' || path === '/consult/';
+---
+
+<header class="site">
+  <div class="inner">
+    <a class="brand" href="/" aria-label="코칭 노트 홈">
+      <SpiralMark size={26} />
+      <Wordmark size={22} />
+    </a>
+    <nav class="site-nav" aria-label="주 메뉴">
+      <a href="/" aria-current={isHome ? 'page' : undefined}>메인</a>
+      <a href="/blog" aria-current={isBlog ? 'page' : undefined}>블로그</a>
+      <a href="/consult" aria-current={isConsult ? 'page' : undefined}>상담신청</a>
+    </nav>
+  </div>
+</header>

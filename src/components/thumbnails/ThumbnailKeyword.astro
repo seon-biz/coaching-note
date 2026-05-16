@@ -1,0 +1,87 @@
+---
+import SpiralMark from '../SpiralMark.astro';
+import { formatPostLabel } from '../../lib/format.ts';
+
+interface Props {
+  size: 'big' | 'small';
+  number: number;
+  category: string;
+  keyword: string;
+}
+
+const { size, number, category, keyword } = Astro.props;
+const label = formatPostLabel(number, category);
+const markSize = size === 'big' ? 28 : 22;
+---
+
+<div class:list={['thumb', 'thumb-keyword', `is-${size}`]} aria-hidden="true">
+  <span class="corner-mark">
+    <SpiralMark size={markSize} color="var(--terra-soft)" />
+  </span>
+  <div class="label">{label}</div>
+  <p class="glyph">{keyword}</p>
+</div>
+
+<style>
+  .thumb-keyword {
+    background: var(--green);
+    color: #f0ecdf;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .corner-mark {
+    position: absolute;
+    display: inline-flex;
+    line-height: 0;
+  }
+
+  .label {
+    font-family: var(--font-meta);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--terra-soft);
+    align-self: flex-start;
+  }
+
+  .glyph {
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: #f0ecdf;
+    margin: 0;
+  }
+
+  .thumb-keyword.is-big {
+    padding: 48px;
+  }
+  .thumb-keyword.is-big .corner-mark {
+    top: 32px;
+    right: 36px;
+  }
+  .thumb-keyword.is-big .label {
+    font-size: 12px;
+    padding-top: 8px;
+  }
+  .thumb-keyword.is-big .glyph {
+    font-size: 240px;
+  }
+
+  .thumb-keyword.is-small {
+    padding: 28px 32px;
+  }
+  .thumb-keyword.is-small .corner-mark {
+    top: 20px;
+    right: 22px;
+  }
+  .thumb-keyword.is-small .label {
+    font-size: 11px;
+    padding-top: 4px;
+  }
+  .thumb-keyword.is-small .glyph {
+    font-size: 108px;
+  }
+</style>

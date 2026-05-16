@@ -1,0 +1,388 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SpiralMark from '../../components/SpiralMark.astro';
+import { formatKoreanDate } from '../../lib/format.ts';
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: String(post.data.number).padStart(3, '0') },
+    props: { post, allPosts: posts },
+  }));
+}) satisfies GetStaticPaths;
+
+const { post, allPosts } = Astro.props;
+const { title, date, number, excerpt } = post.data;
+const { Content } = await render(post);
+
+const sorted = [...allPosts].sort((a, b) => a.data.number - b.data.number);
+const idx = sorted.findIndex((p) => p.data.number === number);
+const prev = idx > 0 ? sorted[idx - 1] : null;
+const next = idx < sorted.length - 1 ? sorted[idx + 1] : null;
+
+const slugOf = (n: number) => String(n).padStart(3, '0');
+const dateLabel = formatKoreanDate(date);
+---
+
+<BaseLayout title={title} description={excerpt}>
+  <article>
+    <header class="article-header reading">
+      <h1>{title}</h1>
+      <p class="date">{dateLabel}</p>
+    </header>
+    <div class="header-rule"><hr /></div>
+
+    <div class="article-body reading">
+      <Content />
+      <div class="end-mark" aria-hidden="true">
+        <SpiralMark size={42} color="var(--terra)" />
+      </div>
+    </div>
+  </article>
+
+  <section class="article-footer reading">
+    <div class="footer-rule"></div>
+
+    <nav class="prevnext" aria-label="이전·다음 글">
+      {prev ? (
+        <a class="nav-item prev" href={`/blog/${slugOf(prev.data.number)}`}>
+          <span class="dir">← 이전 글</span>
+          <span class="nav-title">{prev.data.title}</span>
+        </a>
+      ) : <span />}
+      {next ? (
+        <a class="nav-item next" href={`/blog/${slugOf(next.data.number)}`}>
+          <span class="dir">다음 글 →</span>
+          <span class="nav-title">{next.data.title}</span>
+        </a>
+      ) : <span />}
+    </nav>
+
+    <div class="author">
+      <div class="who">서정옥</div>
+      <div class="role">온라인 비즈니스 코치 · 8년</div>
+      <p class="bio">
+        작은 회사 대표를 위한 1:1 코칭과 그룹 코칭을 합니다.<br />
+        8년 동안 많은 업체와 함께했고, 한 업체와 평균 17개월을 동행했습니다.<br />
+        매주 한 번, 줌으로 만나 그 주의 결정과 흐름을 함께 짚어갑니다.
+      </p>
+      <a class="mail" href="/consult">상담신청 →</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ---- Article header ---- */
+  .article-header {
+    padding: 160px 0 56px;
+  }
+  .article-header h1 {
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -0.024em;
+    line-height: 1.3;
+    color: var(--ink);
+    margin: 0 0 16px;
+    text-wrap: balance;
+    word-break: keep-all;
+  }
+  .article-header .date {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--mute);
+    margin: 0;
+    font-family: var(--font-body);
+  }
+
+  /* Rule between header and body — left-aligned with body (padding-left: 0) */
+  .header-rule {
+    max-width: var(--reading);
+    margin: 0 auto 96px;
+    padding: 0 var(--gutter) 0 0;
+  }
+  .header-rule hr {
+    border: 0;
+    height: 1px;
+    background: var(--rule);
+    margin: 0;
+  }
+
+  /* ---- Article body (styles target markdown-rendered descendants) ---- */
+  /* Shift body left so first glyph aligns with the h1 — the larger h1
+     plus its -0.024em letter-spacing puts its first character a few
+     pixels left of where 17px body text would naturally start. */
+  .article-body {
+    padding-bottom: 64px;
+    padding-left: 0;
+  }
+
+  .article-body :global(p) {
+    font-size: 17px;
+    line-height: 1.85;
+    letter-spacing: -0.014em;
+    color: var(--ink);
+    margin: 0 0 28px;
+    text-wrap: pretty;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+  .article-body :global(p:last-of-type) {
+    margin-bottom: 0;
+  }
+
+  .article-body :global(hr.beat) {
+    border: 0;
+    height: 2px;
+    background: var(--terra);
+    opacity: 0.35;
+    width: 48px;
+    margin: 48px 0;
+  }
+
+  .article-body :global(hr.section-rule) {
+    border: 0;
+    height: 1px;
+    background: var(--rule);
+    margin: 80px 0;
+    width: 100%;
+  }
+
+  .article-body :global(hr:not(.beat):not(.section-rule)) {
+    border: 0;
+    height: 1px;
+    background: var(--rule);
+    margin: 80px 0;
+  }
+
+  .article-body :global(h2) {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.4;
+    color: var(--ink);
+    margin: 64px 0 24px;
+    text-wrap: balance;
+    word-break: keep-all;
+  }
+  .article-body :global(h3) {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.4;
+    color: var(--ink);
+    margin: 48px 0 16px;
+    word-break: keep-all;
+  }
+
+  /* Terra accents in body */
+  .article-body :global(em.hi) {
+    font-style: normal;
+    color: var(--ink);
+    border-bottom: 1.5px solid var(--terra);
+    padding-bottom: 1px;
+  }
+  .article-body :global(em.hi-soft) {
+    font-style: normal;
+    color: var(--terra);
+  }
+
+  /* Blockquote — Forest Green color shift only */
+  .article-body :global(blockquote) {
+    margin: 0 0 28px;
+    padding: 0;
+    border: 0;
+  }
+  .article-body :global(blockquote p) {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.85;
+    color: var(--green);
+    margin: 0;
+  }
+
+  /* Lists — Terra leader */
+  .article-body :global(ul) {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px;
+  }
+  .article-body :global(ul li) {
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--ink);
+    padding-left: 22px;
+    position: relative;
+    margin-bottom: 8px;
+    word-break: keep-all;
+  }
+  .article-body :global(ul li::before) {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.78em;
+    width: 10px;
+    height: 1px;
+    background: var(--terra);
+  }
+  .article-body :global(ul li strong) {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* Inline links */
+  .article-body :global(a) {
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .article-body :global(a:hover) {
+    color: var(--terra);
+    border-color: var(--terra);
+  }
+
+  /* Strong inline */
+  .article-body :global(strong) {
+    font-weight: 600;
+  }
+
+  /* Article end mark */
+  .end-mark {
+    display: flex;
+    justify-content: center;
+    padding-top: 64px;
+  }
+  .end-mark :global(svg) {
+    opacity: 0.9;
+  }
+
+  /* ---- Article footer (prev/next + bio) ---- */
+  .article-footer {
+    padding: 96px 0 64px;
+  }
+  .footer-rule {
+    height: 1px;
+    background: var(--rule);
+    margin-bottom: 48px;
+  }
+
+  .prevnext {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 64px;
+  }
+  .prevnext .nav-item {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.15s;
+  }
+  .prevnext .nav-item.next {
+    justify-content: flex-end;
+    text-align: right;
+  }
+  .prevnext .nav-item .dir {
+    font-size: 13px;
+    color: var(--mute);
+    flex-shrink: 0;
+  }
+  .prevnext .nav-item .nav-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.014em;
+    line-height: 1.5;
+    color: var(--ink);
+    word-break: keep-all;
+  }
+  .prevnext .nav-item:hover .nav-title {
+    color: var(--terra);
+  }
+
+  /* Author block */
+  .author {
+    padding-top: 36px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .author .who {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .author .role {
+    font-size: 14px;
+    color: var(--mute);
+    line-height: 1.6;
+  }
+  .author .bio {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--mute);
+    margin: 16px 0 0;
+    word-break: keep-all;
+  }
+  .author .mail {
+    font-family: var(--font-meta);
+    font-size: 12px;
+    color: var(--terra);
+    border-bottom: 1px solid var(--terra);
+    padding-bottom: 2px;
+    align-self: flex-start;
+    margin-top: 16px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .author .mail:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  /* ---- Mobile ---- */
+  @media (max-width: 720px) {
+    .article-header {
+      padding: 80px 0 56px;
+    }
+    .article-header h1 {
+      font-size: 30px;
+    }
+    .header-rule {
+      margin-bottom: 64px;
+    }
+    .article-body :global(p),
+    .article-body :global(ul li) {
+      font-size: 16px;
+    }
+    .article-body :global(h2) {
+      font-size: 22px;
+      margin: 56px 0 20px;
+    }
+    .article-body :global(h3) {
+      font-size: 18px;
+    }
+    .article-body :global(blockquote p) {
+      font-size: 16px;
+    }
+    .article-body :global(hr.section-rule) {
+      margin: 64px 0;
+    }
+    .prevnext {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .prevnext .nav-item.next {
+      justify-content: flex-start;
+      text-align: left;
+    }
+  }
+</style>

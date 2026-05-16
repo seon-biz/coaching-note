@@ -1,0 +1,35 @@
+---
+interface Props {
+  size?: number;
+  color?: string;
+  class?: string;
+  ariaLabel?: string;
+}
+
+const {
+  size = 26,
+  color = 'var(--terra)',
+  class: className,
+  ariaLabel,
+} = Astro.props;
+
+const hidden = ariaLabel ? undefined : true;
+---
+
+<svg
+  viewBox="0 0 220 220"
+  width={size}
+  height={size}
+  class={className}
+  aria-hidden={hidden}
+  aria-label={ariaLabel}
+  style="display:block"
+>
+  <path
+    d="M 110 22 C 165 22, 198 60, 198 110 C 198 162, 158 198, 110 198 C 62 198, 22 162, 22 114 C 22 78, 50 50, 86 50 C 116 50, 140 72, 140 102 C 140 126, 122 144, 100 144 C 84 144, 72 132, 72 116 C 72 106, 80 98, 90 98 C 96 98, 102 102, 104 108"
+    fill={color}
+    stroke={color}
+    stroke-width="2"
+    stroke-linejoin="round"
+  ></path>
+</svg>

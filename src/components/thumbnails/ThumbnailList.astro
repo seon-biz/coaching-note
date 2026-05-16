@@ -1,0 +1,118 @@
+---
+import { formatPostLabel } from '../../lib/format.ts';
+
+interface Props {
+  size: 'big' | 'small';
+  number: number;
+  category: string;
+  items: [string, string, string] | string[];
+  highlight?: number;
+  footer?: string;
+}
+
+const { size, number, category, items, highlight, footer } = Astro.props;
+const label = formatPostLabel(number, category);
+---
+
+<div class:list={['thumb', 'thumb-list', `is-${size}`]} aria-hidden="true">
+  <div class="label">{label}</div>
+  <div class="grid">
+    {items.slice(0, 3).map((word, i) => (
+      <div class:list={['cell', highlight === i && 'is-highlight']}>
+        <span class="idx">{String(i + 1).padStart(2, '0')}</span>
+        <span class="word">{word}</span>
+      </div>
+    ))}
+  </div>
+  {footer && <div class="footer">{footer}</div>}
+</div>
+
+<style>
+  .thumb-list {
+    background: var(--paper-2);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .label {
+    font-family: var(--font-meta);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    flex: 1;
+    align-items: center;
+  }
+
+  .cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px;
+    border-right: 1px solid var(--rule);
+  }
+
+  .cell:last-child {
+    border-right: 0;
+  }
+
+  .idx {
+    font-family: var(--font-meta);
+    letter-spacing: 0.28em;
+    color: var(--mute);
+  }
+
+  .word {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .cell.is-highlight .idx,
+  .cell.is-highlight .word {
+    color: var(--terra);
+  }
+
+  .footer {
+    font-family: var(--font-meta);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--mute);
+    text-align: right;
+  }
+
+  .thumb-list.is-big {
+    padding: 48px 56px;
+  }
+  .thumb-list.is-big .label,
+  .thumb-list.is-big .idx,
+  .thumb-list.is-big .footer {
+    font-size: 12px;
+  }
+  .thumb-list.is-big .word {
+    font-size: 44px;
+  }
+
+  .thumb-list.is-small {
+    padding: 28px 32px;
+  }
+  .thumb-list.is-small .label,
+  .thumb-list.is-small .idx,
+  .thumb-list.is-small .footer {
+    font-size: 11px;
+  }
+  .thumb-list.is-small .word {
+    font-size: 24px;
+  }
+</style>

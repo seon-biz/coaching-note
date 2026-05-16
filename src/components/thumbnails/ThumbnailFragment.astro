@@ -1,0 +1,92 @@
+---
+import { formatPostLabel } from '../../lib/format.ts';
+
+interface Props {
+  size: 'big' | 'small';
+  number: number;
+  category: string;
+  fragment: string;
+  highlight?: string;
+}
+
+const { size, number, category, fragment, highlight } = Astro.props;
+const label = formatPostLabel(number, category);
+
+const lines = fragment.split(/\n/);
+
+const renderLine = (line: string): Array<{ text: string; terra: boolean }> => {
+  if (!highlight) return [{ text: line, terra: false }];
+  const idx = line.indexOf(highlight);
+  if (idx < 0) return [{ text: line, terra: false }];
+  return [
+    { text: line.slice(0, idx), terra: false },
+    { text: highlight, terra: true },
+    { text: line.slice(idx + highlight.length), terra: false },
+  ];
+};
+---
+
+<div class:list={['thumb', 'thumb-fragment', `is-${size}`]} aria-hidden="true">
+  <p class="frag">{lines.map((line, i) => (
+    <>
+      {i > 0 && <br />}
+      {renderLine(line).map((seg) =>
+        seg.terra ? <span class="terra">{seg.text}</span> : seg.text
+      )}
+    </>
+  ))}</p>
+  <div class="label">{label}</div>
+</div>
+
+<style>
+  .thumb-fragment {
+    background: var(--paper-2);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .frag {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.022em;
+    line-height: 1.25;
+    color: var(--ink);
+    margin: 0;
+    align-self: flex-start;
+  }
+
+  .frag .terra {
+    color: var(--terra);
+  }
+
+  .label {
+    font-family: var(--font-meta);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--mute);
+    align-self: flex-end;
+  }
+
+  .thumb-fragment.is-big {
+    padding: 48px 56px;
+  }
+  .thumb-fragment.is-big .frag {
+    font-size: 56px;
+  }
+  .thumb-fragment.is-big .label {
+    font-size: 12px;
+  }
+
+  .thumb-fragment.is-small {
+    padding: 32px 36px;
+  }
+  .thumb-fragment.is-small .frag {
+    font-size: 38px;
+  }
+  .thumb-fragment.is-small .label {
+    font-size: 11px;
+  }
+</style>

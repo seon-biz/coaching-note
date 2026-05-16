@@ -1,0 +1,67 @@
+---
+interface Props {
+  size?: number;
+  accent?: string;
+  color?: string;
+  class?: string;
+}
+
+const {
+  size = 22,
+  accent = 'var(--terra)',
+  color = 'var(--ink)',
+  class: className,
+} = Astro.props;
+
+const underlineWidth = +(size * (101.2 / 22)).toFixed(2);
+const underlineHeight = +(size * (4.84 / 22)).toFixed(2);
+const strokeWidth = +(size * (1.6 / 22)).toFixed(3);
+---
+
+<span class:list={['wordmark', className]} aria-label="코칭 노트">
+  <span
+    class="wordmark-text"
+    style={`font-size:${size}px; color:${color};`}
+  >코칭 노트</span>
+  <svg
+    class="wordmark-underline"
+    width={underlineWidth}
+    height={underlineHeight}
+    viewBox="0 0 101.2 4.84"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M2 2.86 Q 24.2 0.66, 48.4 2.42 T 99 1.98"
+      stroke={accent}
+      stroke-width={strokeWidth}
+      fill="none"
+      stroke-linecap="round"
+    ></path>
+  </svg>
+</span>
+
+<style>
+  .wordmark {
+    position: relative;
+    padding: 4px 4px;
+    display: inline-block;
+  }
+
+  .wordmark-text {
+    font-family: var(--font-brand);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+    white-space: nowrap;
+  }
+
+  .wordmark-underline {
+    position: absolute;
+    left: 4px;
+    bottom: 0;
+    pointer-events: none;
+  }
+</style>
