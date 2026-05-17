@@ -52,6 +52,39 @@ const ogImageUrl = new URL(ogImage, Astro.site ?? Astro.url).toString();
     <meta property="og:image" content={ogImageUrl} />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://note.seonbiz.com/#person",
+          "name": "서정옥",
+          "jobTitle": "온라인 비즈니스 코치",
+          "description": "8년의 코칭 사고가 쌓이는 자리",
+          "url": "https://note.seonbiz.com",
+          "email": "cobaltblue872@gmail.com",
+          "knowsAbout": [
+            "온라인 비즈니스 코칭",
+            "1인 사업",
+            "쇼핑몰 운영",
+            "상세페이지 최적화",
+            "SEO"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://note.seonbiz.com/#website",
+          "name": "코칭 노트",
+          "alternateName": "Coaching Note",
+          "url": "https://note.seonbiz.com",
+          "description": "서정옥 · 온라인 비즈니스 코치. 8년의 코칭 사고가 쌓이는 자리.",
+          "inLanguage": "ko-KR",
+          "author": { "@id": "https://note.seonbiz.com/#person" },
+          "publisher": { "@id": "https://note.seonbiz.com/#person" }
+        }
+      ]
+    })} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
