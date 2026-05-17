@@ -17,3 +17,6 @@ export const formatNumericDate = (date: Date): string => {
   const d = String(date.getDate()).padStart(2, '0');
   return `${y}.${m}.${d}`;
 };
+
+export const formatISODate = (date: Date): string =>
+  date.toISOString().split('T')[0];

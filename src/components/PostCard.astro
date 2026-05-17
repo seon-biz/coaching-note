@@ -5,7 +5,7 @@ import ThumbnailFragment from './thumbnails/ThumbnailFragment.astro';
 import ThumbnailNumeral from './thumbnails/ThumbnailNumeral.astro';
 import ThumbnailQuestion from './thumbnails/ThumbnailQuestion.astro';
 import ThumbnailList from './thumbnails/ThumbnailList.astro';
-import { formatNumericDate, formatPostLabel } from '../lib/format.ts';
+import { formatNumericDate, formatPostLabel, formatISODate } from '../lib/format.ts';
 
 interface Props {
   post: CollectionEntry<'posts'>;
@@ -70,7 +70,7 @@ const numberLabel = formatPostLabel(number, category);
   </a>
 
   <div class="meta-row">
-    <span class="meta">{dateLabel}</span>
+    <time class="meta" datetime={formatISODate(date)}>{dateLabel}</time>
     <span class="meta terra">· {numberLabel}</span>
     {size === 'big' && readingTime && <span class="meta">{readingTime}</span>}
   </div>
