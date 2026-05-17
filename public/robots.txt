@@ -1,0 +1,10 @@
+# robots.txt for note.seonbiz.com
+# 코칭 노트 — 서정옥 · 온라인 비즈니스 코치
+
+User-agent: *
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+Sitemap: https://note.seonbiz.com/sitemap-index.xml
