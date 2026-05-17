@@ -58,6 +58,11 @@ const articleSchema = {
     </div>
   </article>
 
+  <section class="cta-box reading">
+    <p class="cta-lead">코칭으로 한 단계 같이 짚어가고 싶다면</p>
+    <a class="cta-button" href="/consult">상담신청 →</a>
+  </section>
+
   <section class="article-footer reading">
     <div class="footer-rule"></div>
 
@@ -84,7 +89,6 @@ const articleSchema = {
         8년 동안 많은 업체와 함께했고, 한 업체와 평균 17개월을 동행했습니다.<br />
         매주 한 번, 줌으로 만나 그 주의 결정과 흐름을 함께 짚어갑니다.
       </p>
-      <a class="mail" href="/consult">상담신청 →</a>
     </div>
   </section>
 </BaseLayout>
@@ -278,6 +282,43 @@ const articleSchema = {
     opacity: 0.9;
   }
 
+  /* ---- CTA box (end of article) ---- */
+  .cta-box {
+    margin: 48px auto 32px;
+    padding: 32px;
+    background: var(--paper-2);
+    border: 1px solid var(--terra);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+  .cta-lead {
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--ink);
+    margin: 0;
+    word-break: keep-all;
+  }
+  .cta-button {
+    display: inline-block;
+    padding: 12px 28px;
+    font-family: var(--font-meta);
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terra);
+    border: 1px solid var(--terra);
+    background: transparent;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+  .cta-button:hover {
+    background: var(--terra);
+    color: var(--paper);
+  }
+
   /* ---- Article footer (prev/next + bio) ---- */
   .article-footer {
     padding: 96px 0 64px;
@@ -399,6 +440,13 @@ const articleSchema = {
     }
     .article-body :global(hr.section-rule) {
       margin: 64px 0;
+    }
+    .cta-box {
+      padding: 24px;
+      margin: 40px auto 24px;
+    }
+    .cta-lead {
+      font-size: 15px;
     }
     .prevnext {
       grid-template-columns: 1fr;
