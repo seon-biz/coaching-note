@@ -183,6 +183,12 @@ footer.site .mail:hover {
   color: var(--terra);
 }
 
+footer.site .footer-nav {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
 footer.site .footer-nav a {
   font-family: var(--font-meta);
   font-size: 12px;
