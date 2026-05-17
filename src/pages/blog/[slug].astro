@@ -24,9 +24,25 @@ const next = idx < sorted.length - 1 ? sorted[idx + 1] : null;
 
 const slugOf = (n: number) => String(n).padStart(3, '0');
 const dateLabel = formatKoreanDate(date);
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${Astro.url.href}#article`,
+  "headline": post.data.title,
+  "description": post.data.excerpt,
+  "datePublished": post.data.date.toISOString().split('T')[0],
+  "articleSection": post.data.category,
+  "url": Astro.url.href,
+  "image": new URL('/og-default.png', Astro.site).href,
+  "author": { "@id": "https://note.seonbiz.com/#person" },
+  "publisher": { "@id": "https://note.seonbiz.com/#person" },
+  "inLanguage": "ko-KR",
+  "isPartOf": { "@id": "https://note.seonbiz.com/#website" }
+};
 ---
 
-<BaseLayout title={title} description={excerpt}>
+<BaseLayout title={title} description={excerpt} articleSchema={articleSchema}>
   <article>
     <header class="article-header reading">
       <h1>{title}</h1>
