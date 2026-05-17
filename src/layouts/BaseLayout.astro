@@ -22,6 +22,7 @@ const {
 
 const fullTitle = title ? `${title} — ${SITE_NAME}` : SITE_NAME;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString();
+const ogImageUrl = new URL(ogImage, Astro.site ?? Astro.url).toString();
 ---
 
 <!doctype html>
@@ -45,9 +46,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString(
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={ogImageUrl} />
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
