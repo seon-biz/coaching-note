@@ -8,7 +8,7 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
 );
 
 const [bigPost, ...rest] = posts;
-const smallPosts = rest.slice(0, 2);
+const smallPosts = rest.slice(0, 4);
 ---
 
 <BaseLayout>
