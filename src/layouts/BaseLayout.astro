@@ -8,7 +8,7 @@ interface Props {
   description?: string;
   ogImage?: string;
   bodyClass?: string;
-  articleSchema?: object;
+  pageSchema?: object;
 }
 
 const SITE_NAME = '코칭 노트';
@@ -19,7 +19,7 @@ const {
   description = SITE_DESCRIPTION,
   ogImage = '/og-default.png',
   bodyClass,
-  articleSchema,
+  pageSchema,
 } = Astro.props;
 
 const fullTitle = title ? `${title} — ${SITE_NAME}` : SITE_NAME;
@@ -87,8 +87,8 @@ const ogImageUrl = new URL(ogImage, Astro.site ?? Astro.url).toString();
       ]
     })} />
 
-    {articleSchema && (
-      <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    {pageSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
     )}
 
     <!-- Search Engine Site Verification -->

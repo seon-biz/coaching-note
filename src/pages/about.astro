@@ -1,0 +1,171 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const profileSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": "https://note.seonbiz.com/about#profilepage",
+  "url": "https://note.seonbiz.com/about",
+  "mainEntity": { "@id": "https://note.seonbiz.com/#person" },
+  "isPartOf": { "@id": "https://note.seonbiz.com/#website" }
+};
+---
+
+<BaseLayout
+  title="서정옥"
+  description="8년의 온라인 비즈니스 코치. 가르치지 않고 같이 걷는 방식."
+  pageSchema={profileSchema}
+>
+  <article>
+    <header class="about-header reading">
+      <h1>서정옥</h1>
+      <p class="role">Online Business Coach · 8 Years</p>
+    </header>
+    <div class="header-rule"><hr /></div>
+
+    <div class="about-body reading">
+      <p>
+        8년 전, 웹사이트를 직접 만들어야겠다는 무모한 결정과 함께 새로운 시작이 있었다.
+        코칭 과정 기록이 코칭 노트다.
+        낯섦을 반복하면 익숙한 것이 된다.
+      </p>
+      <p>
+        가르치지 않는다. 그 사람의 속도로 옆에서 같이 걷는다. 줌을 이용해 화면을 보면서,
+        한 단계씩 같이 짚는다. 나의 속도로 끌고 가지 않고, 상대의 속도로 같이 걷는다.
+      </p>
+      <p>
+        코칭은 쇼핑몰 SEO를 중심에 둔다. 스마트스토어, Cafe24, 자사몰 등 플랫폼에
+        맞춰 검색 유입의 기반을 만들고, 필요하면 광고로 가속할 수 있도록 돕는다.
+        키워드, 랜딩, 상세페이지, 분석 — 사업자가 자기 손으로 운영할 수 있는 단계까지
+        함께 간다.
+      </p>
+      <p>
+        1:1 코칭과 상세페이지·쇼핑몰·SEO 그룹 코칭을 진행한다. 모두 주 1회 줌으로
+        만나, 그 한 주의 결정과 흐름을 함께 짚는다.
+      </p>
+
+      <h2>코칭 노트</h2>
+      <p>
+        이곳은 그 코칭에서 쌓인 사고가 한곳에 모이는 노트다. 코칭 중에 들은
+        한 마디, 거두게 된 단정, 전환의 순간들. 글로 남겨야 다음 코칭이 더 정확해진다.
+      </p>
+
+      <h2>도구</h2>
+      <p>
+        코칭에서 반복된 문제를 풀기 위해 <a href="https://seoncoder.shop" target="_blank" rel="noopener">세온코더</a>를 만들었다.
+        이미지로 만든 상세페이지를 검색엔진이 읽을 수 있는 HTML로 변환하는 도구다.
+        코칭이 도구로 이어진 흐름.
+      </p>
+
+      <h2>연락</h2>
+      <p>
+        <a href="/consult">상담 신청</a> · <a href="mailto:cobaltblue872@gmail.com">cobaltblue872@gmail.com</a>
+      </p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  /* ---- About header ---- */
+  .about-header {
+    padding: 160px var(--gutter) 56px;
+  }
+  .about-header h1 {
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -0.024em;
+    line-height: 1.3;
+    color: var(--ink);
+    margin: 0 0 14px;
+    text-wrap: balance;
+    word-break: keep-all;
+  }
+  .about-header .role {
+    display: block;
+    font-family: var(--font-meta);
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--mute);
+    margin: 0;
+  }
+
+  /* Rule between header and body */
+  .header-rule {
+    max-width: var(--reading);
+    margin: 0 auto 96px;
+    padding: 0 var(--gutter);
+  }
+  .header-rule hr {
+    border: 0;
+    height: 1px;
+    background: var(--rule);
+    margin: 0;
+  }
+
+  /* ---- About body ---- */
+  .about-body {
+    padding-bottom: 128px;
+  }
+  .about-body p {
+    font-size: 17px;
+    line-height: 1.85;
+    letter-spacing: -0.014em;
+    color: var(--ink);
+    margin: 0 0 28px;
+    text-wrap: pretty;
+    word-break: keep-all;
+  }
+  .about-body p:last-child {
+    margin-bottom: 0;
+  }
+  .about-body h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    line-height: 1.4;
+    color: var(--ink);
+    margin: 56px 0 18px;
+    text-wrap: balance;
+    word-break: keep-all;
+  }
+  .about-body a {
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .about-body a:hover {
+    color: var(--terra);
+    border-color: var(--terra);
+  }
+
+  /* ---- Mobile ---- */
+  @media (max-width: 720px) {
+    .about-header {
+      padding: 64px var(--gutter) 48px;
+    }
+    .about-header h1 {
+      font-size: 30px;
+    }
+    .about-header .role {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+    }
+    .header-rule {
+      margin-bottom: 64px;
+    }
+    .about-body {
+      padding-bottom: 96px;
+    }
+    .about-body p {
+      font-size: 16px;
+    }
+    .about-body h2 {
+      font-size: 20px;
+      margin: 48px 0 14px;
+    }
+  }
+</style>
