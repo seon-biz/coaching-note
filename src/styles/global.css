@@ -76,7 +76,7 @@ textarea {
 /* ---- Thumbnail base ---- */
 .thumb {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   position: relative;
   container-type: inline-size;
