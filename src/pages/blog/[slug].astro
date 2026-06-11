@@ -24,6 +24,7 @@ const next = idx < sorted.length - 1 ? sorted[idx + 1] : null;
 
 const slugOf = (n: number) => String(n).padStart(3, '0');
 const dateLabel = formatKoreanDate(date);
+const ogImagePath = `/og/${slugOf(number)}.png`;
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -34,7 +35,7 @@ const articleSchema = {
   "datePublished": formatISODate(date),
   "articleSection": post.data.category,
   "url": Astro.url.href,
-  "image": new URL('/og-default.png', Astro.site).href,
+  "image": new URL(ogImagePath, Astro.site).href,
   "author": { "@id": "https://note.seonbiz.com/#person" },
   "publisher": { "@id": "https://note.seonbiz.com/#person" },
   "inLanguage": "ko-KR",
@@ -42,7 +43,7 @@ const articleSchema = {
 };
 ---
 
-<BaseLayout title={title} description={excerpt} pageSchema={articleSchema}>
+<BaseLayout title={title} description={excerpt} ogImage={ogImagePath} pageSchema={articleSchema}>
   <article>
     <header class="article-header reading">
       <h1>{title}</h1>
